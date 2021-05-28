@@ -1,0 +1,54 @@
+int led = 4;
+int led2 = 6;
+int reed = 3;
+int reedData;
+
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+ #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
+#endif
+
+#define LED_PIN 10
+#define LED_COUNT 2
+
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+void setup() 
+{
+  pinMode(led, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(reed, INPUT);
+  Serial.begin(9600);
+
+  strip.begin();   // INITIALIZE NeoPixel strip object (REQUIRED)
+  strip.show(); // Turn OFF all pixels ASAP
+}
+
+void loop() 
+{
+reedData = digitalRead(reed); //read the reed sensor
+
+if(reedData == 0)
+  {
+  analogWrite(4, 255);
+  analogWrite(6, 255);
+
+    for(uint16_t i=0; i<strip.numPixels(); i++) 
+    {
+      strip.setPixelColor(i, 150, 150, 0); //set to yellow, takes RGB vals 0-255
+    }
+   strip.show();
+  }
+
+if(reedData == 1)
+  {
+  analogWrite(4, 0);
+  analogWrite(6, 0);
+
+  for(uint16_t i=0; i<strip.numPixels(); i++) 
+    {
+      strip.setPixelColor(i, 0, 0, 0); //set to off, 0, 0, 0
+    }
+   strip.show();
+  }
+}
