@@ -1,0 +1,41 @@
+int vibSen = 3;
+int vibMo = 5;
+int vibMo2 = 6;
+int vibMo3 = 7;
+int buzzer = 10;
+int touch;
+
+void setup() 
+{
+pinMode(vibSen, INPUT);
+pinMode(buzzer, OUTPUT);
+pinMode(vibMo, OUTPUT);
+pinMode(vibMo2, OUTPUT);
+pinMode(vibMo3, OUTPUT);                                                                                                                                                                            
+}
+
+void loop() 
+ {
+   touch = digitalRead(3);
+
+   if(touch == 1)
+   {
+    //play buzzer
+    tone(buzzer, 2200);
+    
+    //turn on vibration motors
+    digitalWrite(vibMo, HIGH);
+    digitalWrite(vibMo2, HIGH);
+    digitalWrite(vibMo3, HIGH);
+   }
+  else
+  {
+    //don't play buzzer
+    noTone(buzzer);
+    
+    //turn off vibration motors
+    digitalWrite(vibMo, LOW);
+    digitalWrite(vibMo2, LOW);
+    digitalWrite(vibMo3, LOW);
+  }
+ }
